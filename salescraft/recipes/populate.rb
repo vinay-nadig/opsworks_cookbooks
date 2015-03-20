@@ -6,8 +6,8 @@ node[:deploy].each do |application, deploy|
   end
 
   execute "populate database" do
-    command default[:deploy][application][:populate_command]
-    cwd default[:deploy][application][:current_path]
+    command node[:deploy][application][:populate_command]
+    cwd node[:deploy][application][:current_path]
   end
 
   break
