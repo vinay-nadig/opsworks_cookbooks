@@ -13,21 +13,21 @@ node[:deploy].each do |application, deploy|
     cwd node[:deploy][application][:current_path]
   end
 
-  Chef::Log.info("******Creating database: #{node[:deploy][application][:drop_db_command]} ******")
+  Chef::Log.info("******Creating database: #{node[:deploy][application][:create_db_command]} ******")
   execute "create database" do
     command node[:deploy][application][:create_db_command]
     cwd node[:deploy][application][:current_path]
   end
 
-  Chef::Log.info("******Migrating database: #{node[:deploy][application][:drop_db_command]} ******")
+  Chef::Log.info("******Migrating database: #{node[:deploy][application][:migrate_db_command]} ******")
   execute "migrate database" do
     command node[:deploy][application][:migrate_db_command]
     cwd node[:deploy][application][:current_path]
   end
 
-  Chef::Log.info("******Populating database: #{node[:deploy][application][:drop_db_command]} ******")
+  Chef::Log.info("******Populating database: #{node[:deploy][application][:populate_db_command]} ******")
   execute "populate database" do
-    command node[:deploy][application][:populate_command]
+    command node[:deploy][application][:populate_db_command]
     cwd node[:deploy][application][:current_path]
   end
 
