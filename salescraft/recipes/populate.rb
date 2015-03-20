@@ -5,6 +5,21 @@ node[:deploy].each do |application, deploy|
     next
   end
 
+  execute "drop database" do
+    command node[:deploy][application][:drop_db_command]
+    cwd node[:deploy][application][:current_path]
+  end
+
+  execute "create database" do
+    command node[:deploy][application][:create_db_command]
+    cwd node[:deploy][application][:current_path]
+  end
+
+  execute "migrate database" do
+    command node[:deploy][application][:migrate_db_command]
+    cwd node[:deploy][application][:current_path]
+  end
+
   execute "populate database" do
     command node[:deploy][application][:populate_command]
     cwd node[:deploy][application][:current_path]
