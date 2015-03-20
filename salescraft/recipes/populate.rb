@@ -22,14 +22,14 @@ node[:deploy].each do |application, deploy|
   Chef::Log.info("******Migrating database: #{node[:deploy][application][:migrate_db_command]} ******")
   execute "migrate database" do
     command node[:deploy][application][:migrate_db_command]
-    environment { "SECRET_KEY_BASE" => Digest::SHA512.hexdigest(Time.now.to_s) }
+    environment ({ "SECRET_KEY_BASE" => Digest::SHA512.hexdigest(Time.now.to_s) })
     cwd node[:deploy][application][:current_path]
   end
 
   Chef::Log.info("******Populating database: #{node[:deploy][application][:populate_db_command]} ******")
   execute "populate database" do
     command node[:deploy][application][:populate_db_command]
-    environment { "SECRET_KEY_BASE" => Digest::SHA512.hexdigest(Time.now.to_s) }
+    environment ({ "SECRET_KEY_BASE" => Digest::SHA512.hexdigest(Time.now.to_s) })
     cwd node[:deploy][application][:current_path]
   end
 
