@@ -4,6 +4,10 @@ node[:deploy].each do |application, deploy|
     Chef::Log.warn("Dropping & Migrating a production database is a bad idea. I really hope you know exactly what you are doing.")
   end
 
+  if node[:deploy][application] != 'salescraft-api'
+    next
+  end
+
   Chef::Log.info("******Current Directory: #{node[:deploy][application][:current_path]} ******")
 
   Chef::Log.info("******Dropping database: #{node[:deploy][application][:drop_db_command]} ******")
