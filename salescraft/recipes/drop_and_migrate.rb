@@ -2,7 +2,6 @@
 node[:deploy].each do |application, deploy|
   if node[:deploy][application][:rails_env] == 'production'
     Chef::Log.warn("Dropping & Migrating a production database is a bad idea. I really hope you know exactly what you are doing.")
-    next
   end
 
   Chef::Log.info("******Current Directory: #{node[:deploy][application][:current_path]} ******")
